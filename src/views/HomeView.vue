@@ -4,7 +4,8 @@
       <el-table
         :data="postList"
         stripe
-        style="width: 100%">
+        style="width: 100%"
+        @row-click="detailPost">
         <el-table-column
           prop="subject"
           label="제목"
@@ -50,6 +51,11 @@ const getAllPost = async () => {
 
 const registerPage = () => {
   router.push('/post/register')
+}
+
+const detailPost = (row) => {
+  console.log(row)
+  router.push(`/post/detail/${row.id}`)
 }
 
 </script>
