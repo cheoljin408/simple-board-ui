@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import WriteView from '../views/WriteView.vue'
+import PostRegister from '../views/PostRegister.vue'
+import PostDetail from '../views/PostDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +16,16 @@ const router = createRouter({
       path: '/write',
       name: 'write',
       component: WriteView
+    },
+    {
+      path: '/post/register',
+      name: 'postRegister',
+      component: PostRegister
+    },
+    {
+      path: '/post/detail/:postId',
+      name: 'postDetail',
+      component: PostDetail
     }
     // {
     //   path: '/about',

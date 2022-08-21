@@ -3,14 +3,12 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <header>
-    <nav>
+  <el-container>
+    <el-header>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/write">글 작성</RouterLink>
-    </nav>
-  </header>
-
-  <RouterView />
+    </el-header>
+    <RouterView />
+  </el-container>
 </template>
 
 <style>
