@@ -8,6 +8,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import 'bootstrap/dist/css/bootstrap-utilities.css'
+import 'bootstrap/dist/css/bootstrap.css'
 
 const app = createApp(App)
 

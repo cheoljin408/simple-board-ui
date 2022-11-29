@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import WriteView from '../views/WriteView.vue'
 import PostRegister from '../views/PostRegister.vue'
 import PostDetail from '../views/PostDetail.vue'
+import PostUpdate from '../views/PostUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,19 +13,19 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/write',
-      name: 'write',
-      component: WriteView
-    },
-    {
-      path: '/post/register',
+      path: '/posts/register',
       name: 'postRegister',
       component: PostRegister
     },
     {
-      path: '/post/detail/:postId',
+      path: '/posts/:postId',
       name: 'postDetail',
       component: PostDetail
+    },
+    {
+      path: '/posts/update/:postId',
+      name: 'postUpdate',
+      component: PostUpdate
     }
     // {
     //   path: '/about',

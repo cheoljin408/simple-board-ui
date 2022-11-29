@@ -1,61 +1,59 @@
 <template>
-  <el-container>
-    <el-main class="p-0">
-      <el-table
-        :data="postList"
-        stripe
-        style="width: 100%"
-        @row-click="detailPost">
-        <el-table-column
-          prop="subject"
-          label="제목"
-          min-width="50">
-        </el-table-column>
-        <el-table-column
-          prop="content"
-          label="작성자"
-          min-width="25">
-        </el-table-column>
-        <el-table-column
-          prop="createdDate"
-          label="날짜"
-          min-width="25">
-        </el-table-column>
-      </el-table>
-      <el-button type="primary" class="mt-3 float-end" @click="registerPage">글쓰기</el-button>
-    </el-main>
-  </el-container>
+  <div align="right">
+    <el-button type="primary" @click="registerPage">글쓰기</el-button>
+  </div>
+  <el-divider/>
+  <div v-if="postList.length">
+    <template v-for="(post, index) in postList" :key="index">
+      <div @click="detailPost(index)">
+        <div>
+          <h4>{{ post.title }}</h4>
+        </div>
+        <div class="text-black-50 text-truncate">
+          {{ post.content }}
+        </div>
+        <div class="text-sm-end text-black-50 mt-2">
+          {{ post.createdDate }}
+        </div>
+      </div>
+      <el-divider/>
+    </template>
+  </div>
+  <div v-else>
+    <el-empty/>
+    <el-divider/>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 import router from "@/router";
 
-const postList = ref([]);
+const postList = ref([])
 
 onMounted(() => {
-  init();
-});
+  init()
+})
 
 const init = () => {
-  getAllPost();
-};
+  getAllPost()
+}
 
 const getAllPost = async () => {
-  await axios.get("http://localhost:8080/post").then(response => {
-    postList.value = response.data.postList;
-  });
-  console.log(postList.value);
-};
+  await axios.get("http://localhost:8080/posts").then(response => {
+    postList.value = response.data.postList
+  })
+  console.log('postList: ', postList.value)
+}
 
 const registerPage = () => {
-  router.push('/post/register')
+  router.push('/posts/register')
 }
 
-const detailPost = (row) => {
-  console.log(row)
-  router.push(`/post/detail/${row.id}`)
+const detailPost = (index: any) => {
+  const targetPost = postList.value[index]
+  console.log('target post: ', targetPost)
+  router.push(`/posts/${targetPost.postId}`)
 }
-
 </script>
