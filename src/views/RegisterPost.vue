@@ -2,13 +2,13 @@
   <div class="mt-16">
     <div class="mt-2">
       <input v-model="requestData.title" type="text" placeholder="제목을 작성해주세요"
-             class="block w-full rounded-md border-0 p-2 text-gray-900 placeholder:text-gray-500 focus:ring-1 focus:ring-indigo-500 text-xl">
+             class="block w-full rounded-md border-0 p-2 placeholder:text-gray-500 focus:ring-1 focus:ring-indigo-500 text-xl">
     </div>
   </div>
   <div class="mt-5">
     <div class="mt-2">
       <textarea v-model="requestData.content" rows="20" placeholder="게시글 내용을 작성해주세요"
-                class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-500 focus:outline-none"/>
+                class="block w-full rounded-md border-0 p-2 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-500 focus:outline-none"/>
     </div>
   </div>
   <div class="mt-6 flex items-center justify-end gap-x-4">
@@ -30,9 +30,9 @@ export default {
       content: '',
     })
 
-    const submit = () => {
+    const submit = async () => {
       console.log('requestData: ', requestData.value)
-      registerPost(requestData.value)
+      await registerPost(requestData.value);
     }
 
     return {
