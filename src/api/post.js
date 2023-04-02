@@ -21,7 +21,7 @@ export const getPosts = () => {
 }
 
 export const getPost = (data) => {
-    const uri = `/posts/${data.id}`
+    const uri = `/posts/${data.postId}`
     const config = {
         headers: {
             'Content-Type': 'application/json',

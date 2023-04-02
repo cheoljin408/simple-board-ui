@@ -9,19 +9,19 @@
     <div class="mt-10 flex justify-between gap-x-2">
       <input type="text" placeholder="원하는 게시글을 검색해보세요"
              class="mr-2 block w-full rounded-md border-solid ring-1 ring-gray-300 p-2 placeholder:text-gray-500 focus:ring-1 focus:ring-indigo-500">
-      <button type="button" class="rounded-md w-16 bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 shadow-sm">검색</button>
+      <button type="button" class="rounded-md w-16 bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-2 shadow-sm">검색</button>
     </div>
   </div>
   <div class="mt-10 flex justify-end">
-    <button type="button" class="rounded-md w-20 bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 shadow-sm">글 쓰기</button>
+    <button type="button" class="rounded-md w-fit bg-gray-800 hover:bg-gray-900 text-white py-2 px-2 shadow-sm">글 쓰기</button>
   </div>
   <div class="mt-4">
     <hr/>
     <div v-for="(post, index) in postsData.postList" :key="index" class="border-t-gray-300">
-      <div class="my-5 cursor-pointer">
+      <div class="my-5 cursor-pointer" @click="detailPost(post.postId)">
         <p class="text-xl font-bold mb-2">{{ post.title }}</p>
-        <p class="text-gray-600">{{ post.content }}</p>
-        <div class="flex justify-end text-gray-600">
+        <p class="text-gray-500">{{ post.content }}</p>
+        <div class="flex justify-end text-gray-500">
           <p>{{ post.createdDate }}</p>
         </div>
       </div>
@@ -59,10 +59,12 @@
 <script>
 import { ref, onBeforeMount } from "vue"
 import { getPosts } from "../api/post.js"
+import { useRouter } from 'vue-router'
 
 export default {
   name: "Posts",
   setup() {
+    const router = useRouter()
     const postsData = ref({})
 
     onBeforeMount(async () => {
@@ -71,8 +73,14 @@ export default {
       console.log(postsData.value)
     })
 
+    const detailPost = (postId) => {
+      console.log(postId)
+      router.push(`/posts/${postId}`)
+    }
+
     return {
       postsData,
+      detailPost,
     }
   }
 }

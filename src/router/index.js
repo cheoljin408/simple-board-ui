@@ -2,12 +2,16 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
     {
-        path: '/',
+        path: '/posts',
         component: () => import('./../views/Posts.vue')
     },
     {
-        path: '/register/post',
+        path: '/new/post',
         component: () => import('./../views/RegisterPost.vue')
+    },
+    {
+        path: '/posts/:postId',
+        component: () => import('./../views/Post.vue')
     }
 ]
 
