@@ -9,78 +9,88 @@
     <div class="mt-10 flex justify-between gap-x-2">
       <input type="text" placeholder="원하는 게시글을 검색해보세요"
              class="mr-2 block w-full rounded-md border-solid ring-1 ring-gray-300 p-2 placeholder:text-gray-500 focus:ring-1 focus:ring-indigo-500">
-      <button type="button" class="rounded-md w-16 bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-2 shadow-sm">검색</button>
+      <button type="button" class="rounded-md w-16 bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-2 shadow-sm">
+        검색
+      </button>
     </div>
   </div>
   <div class="mt-10 flex justify-end">
-    <button type="button" class="rounded-md w-fit bg-gray-800 hover:bg-gray-900 text-white py-2 px-2 shadow-sm">글 쓰기</button>
+    <button type="button" class="rounded-md w-fit bg-gray-800 hover:bg-gray-900 text-white py-2 px-2 shadow-sm"
+            @click="clickNewPost">글 쓰기
+    </button>
   </div>
   <div class="mt-4">
-    <hr/>
-    <div v-for="(post, index) in postsData.postList" :key="index" class="border-t-gray-300">
-      <div class="my-5 cursor-pointer" @click="detailPost(post.postId)">
-        <p class="text-xl font-bold mb-2">{{ post.title }}</p>
-        <p class="text-gray-500">{{ post.content }}</p>
-        <div class="flex justify-end text-gray-500">
-          <p>{{ post.createdDate }}</p>
-        </div>
-      </div>
+    <div v-if="postsData?.pagingUtil?.totalElements">
       <hr/>
+      <div v-for="(post, index) in postsData.postList" :key="index" class="border-t-gray-300">
+        <div class="my-5 cursor-pointer" @click="detailPost(post.postId)">
+          <p class="text-xl font-bold mb-2">{{ post.title }}</p>
+          <p class="text-gray-500">{{ post.content }}</p>
+          <div class="flex justify-end text-gray-500">
+            <p>{{ post.createdDate }}</p>
+          </div>
+        </div>
+        <hr/>
+      </div>
+      <Pagination :pagingUtil="postsData.pagingUtil" @changePage="changePage" />
     </div>
-  </div>
-  <div class="flex justify-center mt-10">
-    <div>
-      <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-        <a href="#" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-          <span class="sr-only">Previous</span>
-          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
-          </svg>
-        </a>
-        <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
-        <a href="#" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</a>
-        <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">2</a>
-        <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
-        <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
-        <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">8</a>
-        <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">9</a>
-        <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">10</a>
-        <a href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-          <span class="sr-only">Next</span>
-          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      </nav>
+    <div v-else class="my-14 p-6 border rounded-lg flex justify-center items-center text-center text-gray-600">
+      <div>
+        <p class="mb-2 text-xl font-bold">
+          게시글이 존재하지 않습니다.
+        </p>
+        <p class="text-lg">
+          첫 번째 게시글의 작성자가 되어보세요!
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onBeforeMount } from "vue"
-import { getPosts } from "../api/post.js"
-import { useRouter } from 'vue-router'
+import {ref, onBeforeMount} from "vue"
+import {getPosts} from "../api/post.js"
+import {useRouter} from 'vue-router'
+import Pagination from "../components/common/Pagination.vue";
 
 export default {
   name: "Posts",
+  components: {Pagination},
   setup() {
+    // data
     const router = useRouter()
     const postsData = ref({})
 
-    onBeforeMount(async () => {
-      const response = await getPosts();
-      postsData.value = response.data
+    // created
+    getPosts().then(response => postsData.value = response.data)
+
+    // lifecycle
+    onBeforeMount(() => {
       console.log(postsData.value)
     })
+
+    // method
+    const clickNewPost = () => {
+      router.push('/new/post')
+    }
 
     const detailPost = (postId) => {
       console.log(postId)
       router.push(`/posts/${postId}`)
     }
 
+    const changePage = async (page) => {
+      console.log(`changePage ${page}`)
+      const requestParam = { page }
+      await getPosts(requestParam).then(response => postsData.value = response.data)
+      console.log(postsData.value)
+    }
+
     return {
       postsData,
+      clickNewPost,
       detailPost,
+      changePage,
     }
   }
 }

@@ -10,12 +10,13 @@ export const registerPost = (data) => {
     return request.post(uri, data, config)
 }
 
-export const getPosts = () => {
+export const getPosts = (data) => {
     const uri = `/posts`
     const config = {
         headers: {
             'Content-Type': 'application/json',
-        }
+        },
+        params: data
     }
     return request.get(uri, config)
 }

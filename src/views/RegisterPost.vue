@@ -12,31 +12,39 @@
     </div>
   </div>
   <div class="mt-6 flex items-center justify-end gap-x-4">
-    <button class="rounded-md bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 shadow-sm">취소</button>
-    <button @click="submit" class="rounded-md bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 shadow-sm">등록
+    <button class="rounded-md bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 shadow-sm" @click="cancel">취소</button>
+    <button class="rounded-md bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 shadow-sm" @click="submit">등록
     </button>
   </div>
 </template>
 
 <script>
-import {ref} from 'vue'
-import {registerPost} from "../api/post.js";
+import { ref } from 'vue'
+import { useRouter } from "vue-router"
+import { registerPost } from "../api/post.js"
 
 export default {
   name: "RegisterBoard",
   setup() {
+    const router = useRouter()
     const requestData = ref({
       title: '',
       content: '',
     })
 
+    const cancel = () => {
+      router.push('/posts')
+    }
+
     const submit = async () => {
       console.log('requestData: ', requestData.value)
-      await registerPost(requestData.value);
+      const response = await registerPost(requestData.value)
+      router.push(`/posts/${response.data.savedId}`)
     }
 
     return {
       requestData,
+      cancel,
       submit,
     }
   }
